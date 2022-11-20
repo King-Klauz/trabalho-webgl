@@ -49,41 +49,41 @@ window.onload = function init() {
             randomY = getRandomInt(1, 512);
             points[i] = new Point(randomX, randomY);
 
-            /*gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
+            gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
             var t = vec2(2 * randomX / canvas.width - 1,
                 2 * (canvas.height - randomY) / canvas.height - 1);
             gl.bufferSubData(gl.ARRAY_BUFFER, 8 * index, flatten(t));
 
             gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
             t = vec4(colors[(index) % 7]);
-            gl.bufferSubData(gl.ARRAY_BUFFER, 16 * index, flatten(t));*/
+            gl.bufferSubData(gl.ARRAY_BUFFER, 16 * index, flatten(t));
             index++;
         }
 
-        /*for (var i = 0; i < 20; i++) {
+        for (var i = 0; i < 20; i++) {
             console.log(points[i].x + ", " + points[i].y);
-        }*/
+        }
 
         let n = points.length;
         convexPoints = convexHull(points, n);
 
-        for (let temp of convexPoints.values()) {
+        /*for (let i = 1; i<convexPoints.length; i++) {
+            console.log(convexPoints.length);
 
-            /*lines.bindBuffer(lines.ARRAY_BUFFER, lineBuffer);
-            var t = vec2(temp.x, temp.y);
-            lines.bufferSubData(lines.ARRAY_BUFFER, 8 * index, flatten(t));*/
+            
     
             gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
-            var t = vec2(temp.x, temp.y);
+            var t = vec2(2 * convexPoints[i].x / canvas.width - 1,
+            2 * (canvas.height - convexPoints[i].y) / canvas.height - 1);
             gl.bufferSubData(gl.ARRAY_BUFFER, 8 * index, flatten(t));
     
             gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
             t = vec4(colors[(index) % 7]);
             gl.bufferSubData(gl.ARRAY_BUFFER, 16 * index, flatten(t));
     
-            console.log("(" + temp.x + ", " +
-                temp.y + ")");
-        }
+            console.log("(" + convexPoints[i].x + ", " +
+                convexPoints[i].y + ")");
+        }*/
     });
 
 
@@ -196,24 +196,11 @@ function convexHull(points, n) {
     // point
 
     // Print Result
-    
-    /*for (let temp of hull.values()) {
 
-        lines.bindBuffer(lines.ARRAY_BUFFER, lineBuffer);
-        var t = vec2(temp.x, temp.y);
-        lines.bufferSubData(lines.ARRAY_BUFFER, 8 * index, flatten(t));
-
-        gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
-        var t = vec2(temp.x, temp.y);
-        gl.bufferSubData(gl.ARRAY_BUFFER, 8 * index, flatten(t));
-
-        gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
-        t = vec4(colors[(index) % 7]);
-        gl.bufferSubData(gl.ARRAY_BUFFER, 16 * index, flatten(t));
-
+    for (let temp of hull.values()) {
         console.log("(" + temp.x + ", " +
             temp.y + ")");
-    }*/
+    }
     
     return hull;
 }
@@ -222,6 +209,6 @@ function convexHull(points, n) {
 function render() {
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.drawArrays(gl.POINTS, 0, index);
-    //lines.drawArrays(lines.POINTS, 0, 0);
+    gl.drawArrays(gl.LINE_STRIP, 0, 20);
     window.requestAnimFrame(render);
 }
