@@ -39,7 +39,6 @@ window.onload = function init() {
     lines = WebGLUtils.setupWebGL(canvas);
     if (!lines) { alert("WebGL isn't available"); }
 
-
     canvas.addEventListener("mousedown", function (event) {
         const [minSize, maxSize] = gl.getParameter(gl.ALIASED_LINE_WIDTH_RANGE);
         gl.clear(gl.COLOR_BUFFER_BIT);
@@ -60,36 +59,33 @@ window.onload = function init() {
             index++;
         }
 
-        for (var i = 0; i < 20; i++) {
-            console.log(points[i].x + ", " + points[i].y);
-        }
-
         let n = points.length;
         convexPoints = convexHull(points, n);
 
-        /*for (let i = 1; i<convexPoints.length; i++) {
+        /*for (let i = 0; i < convexPoints.length; i++) {
             console.log(convexPoints.length);
 
-            
-    
             gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
             var t = vec2(2 * convexPoints[i].x / canvas.width - 1,
-            2 * (canvas.height - convexPoints[i].y) / canvas.height - 1);
+                2 * (canvas.height - convexPoints[i].y) / canvas.height - 1);
             gl.bufferSubData(gl.ARRAY_BUFFER, 8 * index, flatten(t));
-    
+
             gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
             t = vec4(colors[(index) % 7]);
             gl.bufferSubData(gl.ARRAY_BUFFER, 16 * index, flatten(t));
-    
+
             console.log("(" + convexPoints[i].x + ", " +
                 convexPoints[i].y + ")");
         }*/
+
     });
 
+    /*for (var i = 0; i < 20; i++) {
+        console.log(points[i].x + ", " + points[i].y);
+    }*/
 
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.clearColor(0.5, 0.5, 0.5, 1.0);
-
 
     //
     //  Load shaders and initialize attribute buffers
@@ -201,7 +197,7 @@ function convexHull(points, n) {
         console.log("(" + temp.x + ", " +
             temp.y + ")");
     }
-    
+
     return hull;
 }
 
