@@ -113,6 +113,8 @@ window.onload = function init() {
         let n = points.length;
         convexPoints = convexHull(points, n);
 
+        DrawLines(index, vBuffer, cBuffer, gl, convexPoints, indexConvex)
+
         /*for (let i = 0; i < convexPoints.length; i++) {
             console.log(convexPoints.length);
             indexConvex = convexPoints.length;
@@ -150,8 +152,9 @@ function getRandomInt(min, max) {
     return Math.random() * (max - min + 1) + min;
 }
 
-function DrawLines(index, vBuffer, cBuffer, gl, convexPoints){
-    gl.clear(gl.COLOR_BUFFER_BIT);
+function DrawLines(index, vBuffer, cBuffer, gl, convexPoints, indexConvex){
+    console.log("entrou---> DrawLines");
+    //gl.clear(gl.COLOR_BUFFER_BIT);
     for (let i = 0; i < convexPoints.length; i++) {
         console.log(convexPoints.length);
         indexConvex = convexPoints.length;
@@ -169,8 +172,8 @@ function DrawLines(index, vBuffer, cBuffer, gl, convexPoints){
             convexPoints[i].y + ")");
 
         index++;
-        gl.drawArrays(gl.LINE_LOOP, 0, index);
     }
+    gl.drawArrays(gl.LINE_LOOP, 0, indexConvex);
 }
 
 function RandomizePoints(index, vBuffer, cBuffer, gl, points, Point) {
