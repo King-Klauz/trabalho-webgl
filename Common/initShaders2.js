@@ -1,4 +1,3 @@
-
     // Get a file as a string using  AJAX
     function loadFileAJAX(name) {
         var xhr = new XMLHttpRequest(),
@@ -38,7 +37,5 @@
             return null;
         }
 
-        
         return program;
     };
-
