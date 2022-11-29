@@ -1,10 +1,10 @@
 var canvas;
 var gl;
-var lines;
 
 var maxNumTriangles = 200;
 var maxNumVertices = 3 * maxNumTriangles;
 var index = 0;
+
 var indexConvex = 0;
 var randomX;
 var randomY;

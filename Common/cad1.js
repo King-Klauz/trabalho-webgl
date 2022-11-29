@@ -8,6 +8,7 @@ var idSquare = 0;
 var index = 0;
 var first = true;
 
+
 var t1, t2, t3, t4;
 
 var cIndex = 0;
@@ -21,9 +22,11 @@ class Square {
     this.idSquare = idSquare;
   }
 
-  points() {
-    console.log(this.x1, this.x2, this.y1, this.y2, this.idSquare);
-  }
+  getX1() { return this.x1; }
+  getX2() { return this.x2; }
+  getY1() { return this.y1; }
+  getY2() { return this.y2; }
+
 }
 
 var squares = [];
@@ -40,6 +43,7 @@ var colors = [
 
 window.onload = function init() {
   canvas = document.getElementById("gl-canvas");
+
 
   gl = WebGLUtils.setupWebGL(canvas);
   if (!gl) { alert("WebGL isn't available"); }
@@ -78,6 +82,8 @@ window.onload = function init() {
     cIndex = m.selectedIndex;
   });
 
+  canvas.addEventListener("mousemove", MouseMove, false);
+
 
   canvas.addEventListener("mousedown", function (event) {
     gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
@@ -100,8 +106,9 @@ window.onload = function init() {
       console.log(2 * event.clientX / canvas.width - 1,
         2 * (canvas.height - event.clientY) / canvas.height - 1);
 
-      squares[0] = new Square(t1[0], t2[0], t1[1], t2[1], idSquare);
+      var aux = new Square(t1[0], t2[0], t1[1], t2[1], idSquare);
 
+      squares.push(aux);
 
       gl.bufferSubData(gl.ARRAY_BUFFER, 8 * index, flatten(t1));
       gl.bufferSubData(gl.ARRAY_BUFFER, 8 * (index + 1), flatten(t3));
@@ -118,35 +125,39 @@ window.onload = function init() {
       gl.bufferSubData(gl.ARRAY_BUFFER, 16 * (index - 1), flatten(t));
       idSquare++;
 
-      console.log(idSquare);
       
     }
-    
-    if (idSquare != 0) {
 
-      if (2 * event.clientX / canvas.width - 1 > squares[0].x1 &&
-        2 * (canvas.height - event.clientY) / canvas.height - 1 < squares[0].y1 &&
-        2 * event.clientX / canvas.width - 1 < squares[0].x2 && 2 * (canvas.height - event.clientY) / canvas.height - 1 > squares[0].y2) {
-        console.log("DENTRO DO QUADRADO " + squares[0].id);
-      }
-      console.log("entrou");
-    };
-    
   });
 
-  //canvas.addEventListener("mousemove", MouseMove, false);
-
+  //console.log(squares[0].x1, squares[0].x1);
   render();
+}
+
+function MouseMove(event, squares) {
+  
+
+  
+  var mousePositionX = 2 * event.clientX / canvas.width - 1;
+  var mousePositionX = 2 * (canvas.height - event.clientY) / canvas.height - 1;
+
+  //console.log(mousePositionX, mousePositionX);
+
+  if (idSquare != 0) {
+    console.log(idSquare);
+    if (mousePositionX > squares.getX1() &&
+      mousePositionX < squares.getY1() &&
+      mousePositionX < squares.getX2() && 
+      mousePositionX > squares.getY2()) {
+      console.log("DENTRO DO QUADRADO " + squares.id);
+    }
+    console.log("entrou");
+  };
 }
 
 function verPontos(squares) {
   console.log(squares[0].x1);
 }
-
-function MouseMove(event, squares) {
-
-}
-
 
 function render() {
 
